@@ -15,15 +15,17 @@ const registrar = async (req, res) => {
 
     try {
         const usuario = await new Usuario(req.body)
-        usuario.token = generearId();
+        /* usuario.token = generearId(); */
+        usuario.confirmado = true;
         await usuario.save();
 
+        //Todo: Para comprobar mail
         //Enviar mail
-        emailRegistro({
+       /*  emailRegistro({
             email: usuario.email,
             nombre: usuario.nombre,
             token: usuario.token
-        })
+        }) */
 
         res.json({ msg: 'Usuario creado correctamente, Revisa tu Email para confirmar tu cuenta' })
     } catch (error) {
@@ -59,12 +61,13 @@ const autenticar = async (req, res) => {
 }
 
 const confirmar = async (req, res) => {
-    const { token } = req.params
+    //TODO: Prueba para hacer verificaciones por mail
+    /* const { token } = req.params
     const usuarioConfirmar = await Usuario.findOne({ token })
     if (!usuarioConfirmar) {
         const error = new Error('Token no valido')
         return res.status(403).json({ msg: error.message })
-    }
+    } */
 
     try {
         usuarioConfirmar.confirmado = true;
@@ -72,7 +75,6 @@ const confirmar = async (req, res) => {
         await usuarioConfirmar.save()
 
         res.json({ msg: 'Usuario Confirmado Correctamente' })
-        console.log(usuarioConfirmar);
     } catch (error) {
         console.log(error);
     }

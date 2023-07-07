@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json())
 
 //Configurar CORS
-const whitelist = [process.env.FRONTEND_URL]
+/* const whitelist = [process.env.FRONTEND_URL]
 
 const corsOtions = {
     origin: function (origin, callback) {
@@ -24,9 +24,9 @@ const corsOtions = {
             callback(new Error('Error de Cors'))
         }
     }
-}
+} */
 
-app.use(cors(corsOtions));
+app.use(cors());
 
 //Routing
 app.use('/api/usuarios', usuarioRoutes)
